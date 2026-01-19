@@ -1,0 +1,83 @@
+<% layout('layouts/boilerplate') %>
+  <%= success %>
+
+    <body>
+      <!--  AIRBNB STYLE CATEGORY BAR -->
+      <div class="airbnb-top-bar">
+        <div class="airbnb-categories">
+          <div class="cat active">
+            <i class="fa-solid fa-fire"></i>
+            <span>Trending</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-bed"></i>
+            <span>Rooms</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-city"></i>
+            <span>Iconic Cities</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-mountain"></i>
+            <span>Mountains</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-campground"></i>
+            <span>Camping</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-tractor"></i>
+            <span>Farms</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-igloo"></i>
+            <span>Arctic</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-house-dome"></i>
+            <span>Domes</span>
+          </div>
+          <div class="cat">
+            <i class="fa-solid fa-sailboat"></i>
+            <span>Boats</span>
+          </div>
+        </div>
+
+        <!-- Right Toggle -->
+        <div class="tax-toggle">
+          <span>Display total after taxes</span>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!--  LISTINGS GRID  -->
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        <% for (let listing of allListings) { %>
+          <a href="/listings/<%= listing.id %>" class="listing-link">
+            <div class="card col">
+
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+
+              <!-- ❤️ Wishlist Heart -->
+              <div class="wishlist-heart">
+                <i class="fa-regular fa-heart"></i>
+              </div>
+
+              <div class="card-img-overlay"></div>
+
+              <div class="card-body">
+                <p class="card-text">
+                  <%= listing.title %><br />
+                    &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                </p>
+              </div>
+
+            </div>
+          </a>
+          <% } %>
+      </div>
+
+    </body>

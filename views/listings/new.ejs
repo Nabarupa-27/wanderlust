@@ -1,0 +1,122 @@
+<% layout('layouts/boilerplate') %>
+
+<% if (currentUser) { %>
+
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h3 class="mb-3">Create a New Listing</h3>
+
+      <!-- FORM -->
+      <form
+        action="/listings"
+        method="POST"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input
+            name="listing[title]"
+            placeholder="Enter title"
+            type="text"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea
+            name="listing[description]"
+            placeholder="Enter description"
+            class="form-control"
+            required
+          ></textarea>
+        </div>
+
+        <!-- ✅ CATEGORY (REQUIRED FIX) -->
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select
+            name="listing[category]"
+            class="form-select"
+            required
+          >
+            <option value="">Select category</option>
+            <option value="trending">Trending</option>
+            <option value="rooms">Rooms</option>
+            <option value="iconic">Iconic Cities</option>
+            <option value="mountains">Mountains</option>
+            <option value="camping">Camping</option>
+            <option value="farms">Farms</option>
+            <option value="arctic">Arctic</option>
+            <option value="domes">Domes</option>
+            <option value="boats">Boats</option>
+          </select>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-3">
+          <label class="form-label">Upload Image</label>
+          <input
+            name="image"
+            type="file"
+            class="form-control"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- Price + Country -->
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Price</label>
+            <input
+              name="listing[price]"
+              placeholder="Enter price"
+              type="text"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <label class="form-label">Country</label>
+            <input
+              name="listing[country]"
+              placeholder="Enter country"
+              type="text"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input
+            name="listing[location]"
+            placeholder="Enter location"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <!-- Submit -->
+        <button class="btn btn-primary">Add Listing</button>
+
+      </form>
+    </div>
+  </div>
+
+<% } else { %>
+
+  <div class="alert alert-danger text-center mt-4">
+    You must be logged in to create a listing.
+  </div>
+
+<% } %>
