@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top shadow-sm">
   <div class="container">
 
-    <!-- Brand / Home -->
+    <!-- Brand -->
     <a class="navbar-brand fw-bold text-primary" href="/listings">
       <i class="fa-solid fa-compass"></i> Wanderlust
     </a>
@@ -18,7 +18,7 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
 
-      <!-- LEFT SIDE -->
+      <!-- LEFT -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <% if (currentUser) { %>
           <li class="nav-item">
@@ -29,7 +29,7 @@
         <% } %>
       </ul>
 
-      <!-- 🔍 CENTER SEARCH BAR -->
+      <!-- CENTER SEARCH -->
       <form
         class="navbar-search d-none d-lg-flex"
         action="/listings"
@@ -37,25 +37,48 @@
       >
         <input
           type="text"
-          name="location"
+          name="search"
           placeholder="Search destinations"
           class="search-input"
+          value="<%= typeof search !== 'undefined' ? search : '' %>"
         />
         <button type="submit" class="search-btn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
 
-      <!-- RIGHT SIDE -->
+      <!-- RIGHT -->
       <ul class="navbar-nav ms-auto align-items-center gap-2">
 
-        <li class="nav-item">
-          <a class="btn btn-outline-secondary btn-sm" href="/listings/new">
-            Airbnb your home
-          </a>
-        </li>
+        <% if (currentUser) { %>
+          <!-- Wishlist -->
+          <li class="nav-item">
+            <a class="btn btn-outline-danger btn-sm" href="/wishlist">
+              ❤️ Wishlist
+            </a>
+          </li>
 
-        <% if (!currentUser) { %>
+          <!-- Host -->
+          <li class="nav-item">
+            <a class="btn btn-outline-secondary btn-sm" href="/listings/new">
+              Airbnb your home
+            </a>
+          </li>
+
+          <!-- User -->
+          <li class="nav-item text-muted small">
+            Hi, <strong><%= currentUser.username %></strong>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <a class="btn btn-outline-danger btn-sm" href="/logout">
+              Logout
+            </a>
+          </li>
+
+        <% } else { %>
+          <!-- Guest -->
           <li class="nav-item">
             <a class="btn btn-outline-primary btn-sm" href="/login">
               Login
@@ -64,15 +87,6 @@
           <li class="nav-item">
             <a class="btn btn-primary btn-sm" href="/signup">
               Sign up
-            </a>
-          </li>
-        <% } else { %>
-          <li class="nav-item text-muted small">
-            Hi, <strong><%= currentUser.username %></strong>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-danger btn-sm" href="/logout">
-              Logout
             </a>
           </li>
         <% } %>

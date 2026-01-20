@@ -1,49 +1,59 @@
 <% layout('layouts/boilerplate') %>
-  <%= success %>
 
-    <body>
-      <!--  AIRBNB STYLE CATEGORY BAR -->
+  <% let selectedCategory=typeof category !=="undefined" ? category : null; %>
+    <%= success %>
+
+      <!-- AIRBNB STYLE CATEGORY BAR -->
       <div class="airbnb-top-bar">
         <div class="airbnb-categories">
-          <div class="cat active">
+
+          <a href="/listings" class="cat <%= !selectedCategory ? 'active' : '' %>">
             <i class="fa-solid fa-fire"></i>
             <span>Trending</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=rooms" class="cat <%= selectedCategory === 'rooms' ? 'active' : '' %>">
             <i class="fa-solid fa-bed"></i>
             <span>Rooms</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=iconic" class="cat <%= selectedCategory === 'iconic' ? 'active' : '' %>">
             <i class="fa-solid fa-city"></i>
             <span>Iconic Cities</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=mountains" class="cat <%= selectedCategory === 'mountains' ? 'active' : '' %>">
             <i class="fa-solid fa-mountain"></i>
             <span>Mountains</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=camping" class="cat <%= selectedCategory === 'camping' ? 'active' : '' %>">
             <i class="fa-solid fa-campground"></i>
             <span>Camping</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=farms" class="cat <%= selectedCategory === 'farms' ? 'active' : '' %>">
             <i class="fa-solid fa-tractor"></i>
             <span>Farms</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=arctic" class="cat <%= selectedCategory === 'arctic' ? 'active' : '' %>">
             <i class="fa-solid fa-igloo"></i>
             <span>Arctic</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=domes" class="cat <%= selectedCategory === 'domes' ? 'active' : '' %>">
             <i class="fa-solid fa-house-dome"></i>
             <span>Domes</span>
-          </div>
-          <div class="cat">
+          </a>
+
+          <a href="/listings?category=boats" class="cat <%= selectedCategory === 'boats' ? 'active' : '' %>">
             <i class="fa-solid fa-sailboat"></i>
             <span>Boats</span>
-          </div>
+          </a>
+
         </div>
 
-        <!-- Right Toggle -->
         <div class="tax-toggle">
           <span>Display total after taxes</span>
           <label class="switch">
@@ -53,31 +63,45 @@
         </div>
       </div>
 
-      <!--  LISTINGS GRID  -->
-      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <!-- LISTINGS GRID -->
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+
         <% for (let listing of allListings) { %>
-          <a href="/listings/<%= listing.id %>" class="listing-link">
-            <div class="card col">
 
-              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+          <div class="col">
+            <div class="card position-relative h-100">
 
-              <!-- ❤️ Wishlist Heart -->
-              <div class="wishlist-heart">
-                <i class="fa-regular fa-heart"></i>
-              </div>
+              <!-- Wishlist Heart -->
+              <% if (currentUser) { %>
+                <a href="/listings/<%= listing._id %>/wishlist" class="wishlist-heart-btn">
+                  <% const saved=currentUser.wishlist && currentUser.wishlist.some( w=> w.toString() ===
+                    listing._id.toString()
+                    );
+                    %>
 
-              <div class="card-img-overlay"></div>
+                    <% if (saved) { %>
+                      <i class="fa-solid fa-heart text-danger"></i>
+                      <% } else { %>
+                        <i class="fa-regular fa-heart"></i>
+                        <% } %>
+                </a>
+                <% } %>
 
-              <div class="card-body">
-                <p class="card-text">
-                  <%= listing.title %><br />
-                    &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-                </p>
-              </div>
+                  <!-- Listing Link -->
+                  <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" />
+
+                    <div class="card-body">
+                      <p class="card-text">
+                        <%= listing.title %><br />
+                          ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+                      </p>
+                    </div>
+                  </a>
 
             </div>
-          </a>
-          <% } %>
-      </div>
+          </div>
 
-    </body>
+          <% } %>
+
+      </div>

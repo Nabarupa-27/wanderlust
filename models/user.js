@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Safe import 
+// safe import
 const passportLocalMongoose =
   require("passport-local-mongoose").default ||
   require("passport-local-mongoose");
@@ -12,9 +12,16 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+
+  wishlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Listing",
+    },
+  ],
 });
 
-// plugin now gets a FUNCTION
+// plugin
 userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);

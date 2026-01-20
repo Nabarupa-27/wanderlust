@@ -1,0 +1,28 @@
+<% layout("layouts/boilerplate") %>
+
+<h3 class="mb-4">❤️ My Wishlist</h3>
+
+<% if (wishlist.length === 0) { %>
+  <p>No items in your wishlist.</p>
+<% } %>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+  <% for (let listing of wishlist) { %>
+    <a href="/listings/<%= listing._id %>" class="listing-link">
+      <div class="card col">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="listing"
+        />
+
+        <div class="card-body">
+          <p class="card-text">
+            <%= listing.title %><br />
+            ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+          </p>
+        </div>
+      </div>
+    </a>
+  <% } %>
+</div>
