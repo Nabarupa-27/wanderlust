@@ -7,7 +7,7 @@ const { isLoggedIn } = require("../middleware");
 
 // LOGIN
 router.get("/login", (req, res) => {
-  res.render("users/login.ejs");
+  res.render("user/login.ejs");
 });
 
 router.post(
@@ -24,7 +24,7 @@ router.post(
 
 // SIGNUP
 router.get("/signup", (req, res) => {
-  res.render("users/signup.ejs");
+  res.render("user/signup.ejs");
 });
 
 router.post("/signup", async (req, res, next) => {
