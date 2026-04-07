@@ -50,7 +50,7 @@
       <!-- RIGHT -->
       <ul class="navbar-nav ms-auto align-items-center gap-2">
 
-        <% if (currentUser) { %>
+        <% if (typeof currentUser !== "undefined" && currentUser) { %>
           <!-- Wishlist -->
           <li class="nav-item">
             <a class="btn btn-outline-danger btn-sm" href="/wishlist">
