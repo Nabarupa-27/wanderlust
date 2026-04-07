@@ -25,7 +25,7 @@ const listingRoutes = require("./route/listingroute");
 const reviewRoutes = require("./route/reviewroute");
 
 // DATABASE
-const dbUrl = process.env.ATLASTDB_URL;
+const dbUrl = process.env.MONGO_URI;
 
 // CONNECT DB
 mongoose
