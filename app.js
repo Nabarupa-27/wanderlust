@@ -25,7 +25,7 @@ const listingRoutes = require("./route/listingroute");
 const reviewRoutes = require("./route/reviewroute");
 
 // DATABASE
-const dbUrl = process.env.MONGO_URI;
+const dbUrl = "mongodb+srv://nabarupabhunia27_db_user:Naba12345@cluster0.hyjzly4.mongodb.net/wanderlust";
 
 // CONNECT DB
 mongoose
