@@ -11,7 +11,7 @@ const ExpressError = require("./utils/ExpressError");
 
 // SESSION + STORE
 const session = require("express-session");
-const MongoStore = require("connect-mongo"); // ✅ FIXED
+// const MongoStore = require("connect-mongo"); 
 const flash = require("connect-flash");
 
 // PASSPORT
@@ -45,13 +45,15 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 /* SESSION STORE */
+/*
 const store = MongoStore.create({
-  mongoUrl: dbUrl, // ✅ now working
+  mongoUrl: dbUrl,
   crypto: {
     secret: process.env.SECRET || "mysupersecret",
   },
   touchAfter: 24 * 3600,
 });
+*/
 
 store.on("error", function (e) {
   console.log("SESSION STORE ERROR", e);
@@ -59,7 +61,6 @@ store.on("error", function (e) {
 
 /* SESSION CONFIG */
 const sessionOptions = {
-  store,
   name: "session",
   secret: process.env.SECRET || "mysupersecret",
   resave: false,
