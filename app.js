@@ -11,7 +11,7 @@ const ExpressError = require("./utils/ExpressError");
 
 // SESSION + STORE
 const session = require("express-session");
-const MongoStore = require("connect-mongo").default;
+const MongoStore = require("connect-mongo"); // ✅ FIXED
 const flash = require("connect-flash");
 
 // PASSPORT
@@ -24,8 +24,9 @@ const userRoutes = require("./route/user");
 const listingRoutes = require("./route/listingroute");
 const reviewRoutes = require("./route/reviewroute");
 
-// DATABASE
-const dbUrl = "mongodb+srv://nabarupabhunia27_db_user:Naba12345@cluster0.hyjzly4.mongodb.net/wanderlust";
+// DATABASE (direct URL - temporary fix)
+const dbUrl =
+  "mongodb+srv://nabarupabhunia27_db_user:Naba12345@cluster0.hyjzly4.mongodb.net/wanderlust";
 
 // CONNECT DB
 mongoose
@@ -43,13 +44,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
-/* SESSION STORE (IMPORTANT)*/
+/* SESSION STORE */
 const store = MongoStore.create({
-  mongoUrl: dbUrl,
+  mongoUrl: dbUrl, // ✅ now working
   crypto: {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "mysupersecret",
   },
-  touchAfter: 24 * 3600, 
+  touchAfter: 24 * 3600,
 });
 
 store.on("error", function (e) {
@@ -60,22 +61,22 @@ store.on("error", function (e) {
 const sessionOptions = {
   store,
   name: "session",
-  secret: process.env.SECRET,
+  secret: process.env.SECRET || "mysupersecret",
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 3, 
+    maxAge: 1000 * 60 * 60 * 24 * 3,
   },
 };
 
-// SESSION FIRST
+// SESSION
 app.use(session(sessionOptions));
 
-// FLASH AFTER SESSION
+// FLASH
 app.use(flash());
 
-// PASSPORT CONFIG
+// PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -83,7 +84,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// GLOBAL TEMPLATE VARIABLES
+// GLOBAL VARIABLES
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -101,10 +102,11 @@ app.use("/listings", listingRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/", userRoutes);
 
-// 404 HANDLER
+// 404
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page not found!"));
 });
+
 // ERROR HANDLER
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong!" } = err;
