@@ -6,13 +6,12 @@
     <div class="col-8 offset-2">
       <h3 class="mb-3">Create a New Listing</h3>
 
-      <!-- FORM -->
       <form
         action="/listings"
         method="POST"
-        novalidate
-        class="needs-validation"
         enctype="multipart/form-data"
+        class="needs-validation"
+        novalidate
       >
 
         <!-- Title -->
@@ -20,9 +19,9 @@
           <label class="form-label">Title</label>
           <input
             name="listing[title]"
-            placeholder="Enter title"
             type="text"
             class="form-control"
+            placeholder="Enter title"
             required
           >
         </div>
@@ -32,13 +31,13 @@
           <label class="form-label">Description</label>
           <textarea
             name="listing[description]"
-            placeholder="Enter description"
             class="form-control"
+            placeholder="Enter description"
             required
           ></textarea>
         </div>
 
-        <!-- CATEGORY (REQUIRED FIX) -->
+        <!-- Category -->
         <div class="mb-3">
           <label class="form-label">Category</label>
           <select
@@ -59,40 +58,42 @@
           </select>
         </div>
 
-        <!-- Image Upload -->
+        <!-- Image Upload (FIXED) -->
         <div class="mb-3">
           <label class="form-label">Upload Image</label>
           <input
-            name="image"
             type="file"
+            name="image"
             class="form-control"
             accept="image/*"
-          />
+          >
+          <small class="text-muted">
+            (Optional — image na dile default image use hobe)
+          </small>
         </div>
 
-        <!-- Price + Country -->
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Price</label>
-            <input
-              name="listing[price]"
-              placeholder="Enter price"
-              type="text"
-              class="form-control"
-              required
-            />
-          </div>
+        <!-- Price -->
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <input
+            name="listing[price]"
+            type="number"
+            class="form-control"
+            placeholder="Enter price"
+            required
+          >
+        </div>
 
-          <div class="col-md-8 mb-3">
-            <label class="form-label">Country</label>
-            <input
-              name="listing[country]"
-              placeholder="Enter country"
-              type="text"
-              class="form-control"
-              required
-            />
-          </div>
+        <!-- Country -->
+        <div class="mb-3">
+          <label class="form-label">Country</label>
+          <input
+            name="listing[country]"
+            type="text"
+            class="form-control"
+            placeholder="Enter country"
+            required
+          >
         </div>
 
         <!-- Location -->
@@ -100,10 +101,10 @@
           <label class="form-label">Location</label>
           <input
             name="listing[location]"
-            placeholder="Enter location"
             type="text"
             class="form-control"
-          />
+            placeholder="Enter location"
+          >
         </div>
 
         <!-- Submit -->
