@@ -6,15 +6,16 @@
     <div class="col-8 offset-2">
       <h3 class="mb-3">Create a New Listing</h3>
 
+      <!-- FORM -->
       <form
         action="/listings"
         method="POST"
         enctype="multipart/form-data"
-        class="needs-validation"
         novalidate
+        class="needs-validation"
       >
 
-        <!-- Title -->
+        <!-- TITLE -->
         <div class="mb-3">
           <label class="form-label">Title</label>
           <input
@@ -26,7 +27,7 @@
           >
         </div>
 
-        <!-- Description -->
+        <!-- DESCRIPTION -->
         <div class="mb-3">
           <label class="form-label">Description</label>
           <textarea
@@ -37,7 +38,7 @@
           ></textarea>
         </div>
 
-        <!-- Category -->
+        <!-- CATEGORY -->
         <div class="mb-3">
           <label class="form-label">Category</label>
           <select
@@ -58,7 +59,7 @@
           </select>
         </div>
 
-        <!-- Image Upload (FIXED) -->
+        <!-- IMAGE -->
         <div class="mb-3">
           <label class="form-label">Upload Image</label>
           <input
@@ -68,11 +69,11 @@
             accept="image/*"
           >
           <small class="text-muted">
-            (Optional — image na dile default image use hobe)
+            (Optional — no image dile default image use hobe)
           </small>
         </div>
 
-        <!-- Price -->
+        <!-- PRICE -->
         <div class="mb-3">
           <label class="form-label">Price</label>
           <input
@@ -84,7 +85,7 @@
           >
         </div>
 
-        <!-- Country -->
+        <!-- COUNTRY -->
         <div class="mb-3">
           <label class="form-label">Country</label>
           <input
@@ -96,7 +97,7 @@
           >
         </div>
 
-        <!-- Location -->
+        <!-- LOCATION -->
         <div class="mb-3">
           <label class="form-label">Location</label>
           <input
@@ -107,7 +108,7 @@
           >
         </div>
 
-        <!-- Submit -->
+        <!-- SUBMIT -->
         <button class="btn btn-primary">Add Listing</button>
 
       </form>

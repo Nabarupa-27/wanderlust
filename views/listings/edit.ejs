@@ -6,12 +6,13 @@
 
       <h3 class="mb-3">Edit Your Listing</h3>
 
+      <!-- FIXED FORM -->
       <form
         method="POST"
-        action="/listings/<%= listing._id %>?_method=PUT"
+        action="/listings/<%= listing._id %>"
+        enctype="multipart/form-data"
         novalidate
         class="needs-validation"
-        enctype="multipart/form-data"
       >
 
         <!-- TITLE -->
@@ -36,7 +37,7 @@
           ><%= listing.description %></textarea>
         </div>
 
-        <!-- ✅ CATEGORY (REQUIRED FIX) -->
+        <!-- CATEGORY -->
         <div class="mb-3">
           <label class="form-label">Category</label>
           <select
@@ -46,50 +47,29 @@
           >
             <option value="">Select category</option>
 
-            <option value="trending" <%= listing.category === "trending" ? "selected" : "" %>>
-              Trending
-            </option>
-            <option value="rooms" <%= listing.category === "rooms" ? "selected" : "" %>>
-              Rooms
-            </option>
-            <option value="iconic" <%= listing.category === "iconic" ? "selected" : "" %>>
-              Iconic Cities
-            </option>
-            <option value="mountains" <%= listing.category === "mountains" ? "selected" : "" %>>
-              Mountains
-            </option>
-            <option value="camping" <%= listing.category === "camping" ? "selected" : "" %>>
-              Camping
-            </option>
-            <option value="farms" <%= listing.category === "farms" ? "selected" : "" %>>
-              Farms
-            </option>
-            <option value="arctic" <%= listing.category === "arctic" ? "selected" : "" %>>
-              Arctic
-            </option>
-            <option value="domes" <%= listing.category === "domes" ? "selected" : "" %>>
-              Domes
-            </option>
-            <option value="boats" <%= listing.category === "boats" ? "selected" : "" %>>
-              Boats
-            </option>
-
+            <option value="trending" <%= listing.category === "trending" ? "selected" : "" %>>Trending</option>
+            <option value="rooms" <%= listing.category === "rooms" ? "selected" : "" %>>Rooms</option>
+            <option value="iconic" <%= listing.category === "iconic" ? "selected" : "" %>>Iconic Cities</option>
+            <option value="mountains" <%= listing.category === "mountains" ? "selected" : "" %>>Mountains</option>
+            <option value="camping" <%= listing.category === "camping" ? "selected" : "" %>>Camping</option>
+            <option value="farms" <%= listing.category === "farms" ? "selected" : "" %>>Farms</option>
+            <option value="arctic" <%= listing.category === "arctic" ? "selected" : "" %>>Arctic</option>
+            <option value="domes" <%= listing.category === "domes" ? "selected" : "" %>>Domes</option>
+            <option value="boats" <%= listing.category === "boats" ? "selected" : "" %>>Boats</option>
           </select>
         </div>
 
-        <!-- CURRENT IMAGE PREVIEW -->
+        <!-- CURRENT IMAGE -->
         <% if (listing.image && listing.image.url) { %>
           <div class="mb-3">
             <label class="form-label">Current Image</label><br>
             <img
-              id="imagePreview"
               src="<%= listing.image.url %>"
               alt="current image"
               style="width: 200px; border-radius: 8px;"
-              class="mb-2"
             />
             <p class="text-muted small">
-              Select a new image only if you want to replace this
+              Upload new image to replace
             </p>
           </div>
         <% } %>
@@ -102,7 +82,6 @@
             type="file"
             class="form-control"
             accept="image/*"
-            id="imageInput"
           />
         </div>
 
@@ -150,24 +129,3 @@
     </div>
   </div>
 </div>
-
-<!-- IMAGE PREVIEW SCRIPT -->
-<script>
-  const imageInput = document.getElementById("imageInput");
-  const imagePreview = document.getElementById("imagePreview");
-
-  if (imageInput && imagePreview) {
-    imageInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          imagePreview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
-</script>
-
-<script src="/js/script.js"></script>
