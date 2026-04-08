@@ -55,11 +55,13 @@ const isReviewAuthor = async (req, res, next) => {
 
 // validate listing
 const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
+  const data = req.body.listing || req.body;  
+  const { error } = listingSchema.validate({ listing: data });
   if (error) {
     const msg = error.details.map(el => el.message).join(",");
     return next(new ExpressError(400, msg));
   }
+  req.body.listing = data;  
   next();
 };
 
