@@ -28,13 +28,18 @@ module.exports.renderNewForm = (req, res) => {
 // CREATE (FINAL FIXED)
 module.exports.createListing = async (req, res) => {
   try {
-    // SAFE BODY FIX
-    const data = req.body.listing || req.body;
+    console.log("BODY:", req.body); // debug
+
+    const data = req.body.listing;
+
+    if (!data) {
+      return res.send("Form data not received");
+    }
 
     const listing = new Listing(data);
     listing.owner = req.user._id;
 
-    // ALWAYS DEFAULT IMAGE
+    // ALWAYS default image (no upload for now)
     listing.image = {
       url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
       filename: "default",

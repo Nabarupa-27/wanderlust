@@ -4,9 +4,9 @@ const router = express.Router();
 const listingController = require("../controllers/listings");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware");
 
-const multer = require("multer");
-const { storage } = require("../utils/cloudinary");
-const upload = multer({ storage });
+// const multer = require("multer");
+// const { storage } = require("../utils/cloudinary");
+// const upload = multer({ storage });
 
 // index
 router.get("/", listingController.index);
@@ -35,7 +35,6 @@ router.get("/:id/edit", isLoggedIn, isOwner, listingController.renderEditForm);
 router.put(
   "/:id",
   isLoggedIn,
-  validateListing,
   listingController.updateListing
 );
 
