@@ -26,8 +26,8 @@ module.exports.index = async (req, res) => {
     });
 
   } catch (err) {
-    console.log("INDEX ERROR:", err);
-    res.send("Error loading listings");
+    console.log(err);
+    res.send("Something went wrong!");
   }
 };
 
@@ -43,18 +43,14 @@ module.exports.createListing = async (req, res) => {
   try {
     const data = req.body.listing;
 
-    if (!data) {
-      return res.send("Form data not received");
-    }
-
     const listing = new Listing(data);
     listing.owner = req.user._id;
 
-    // IMAGE HANDLE
-    if (req.file && req.file.path) {
+    //  IMAGE SAFE 
+    if (req.file) {
       listing.image = {
-        url: req.file.path,
-        filename: req.file.filename,
+        url: req.file.path || req.file.secure_url || "",
+        filename: req.file.filename || "cloudinary",
       };
     } else {
       listing.image = {
@@ -70,7 +66,7 @@ module.exports.createListing = async (req, res) => {
 
   } catch (err) {
     console.log("CREATE ERROR:", err);
-    res.send("Error while creating listing");
+    res.send("Something went wrong!");
   }
 };
 
@@ -92,13 +88,13 @@ module.exports.showListing = async (req, res, next) => {
     res.render("listings/show.ejs", { listing });
 
   } catch (err) {
-    console.log("SHOW ERROR:", err);
-    res.send("Error loading listing");
+    console.log(err);
+    res.send("Something went wrong!");
   }
 };
 
 
-// EDIT FORM
+// EDIT
 module.exports.renderEditForm = async (req, res, next) => {
   try {
     const listing = await Listing.findById(req.params.id);
@@ -110,8 +106,8 @@ module.exports.renderEditForm = async (req, res, next) => {
     res.render("listings/edit.ejs", { listing });
 
   } catch (err) {
-    console.log("EDIT ERROR:", err);
-    res.send("Error loading edit form");
+    console.log(err);
+    res.send("Something went wrong!");
   }
 };
 
@@ -121,21 +117,17 @@ module.exports.updateListing = async (req, res) => {
   try {
     const data = req.body.listing;
 
-    if (!data) {
-      return res.send("No data received");
-    }
-
     const listing = await Listing.findByIdAndUpdate(
       req.params.id,
       data,
       { new: true }
     );
 
-    // IMAGE UPDATE
-    if (req.file && req.file.path) {
+    // IMAGE SAFE 
+    if (req.file) {
       listing.image = {
-        url: req.file.path,
-        filename: req.file.filename,
+        url: req.file.path || req.file.secure_url || "",
+        filename: req.file.filename || "cloudinary",
       };
       await listing.save();
     }
@@ -145,7 +137,7 @@ module.exports.updateListing = async (req, res) => {
 
   } catch (err) {
     console.log("UPDATE ERROR:", err);
-    res.send("Error updating listing");
+    res.send("Something went wrong!");
   }
 };
 
@@ -159,8 +151,8 @@ module.exports.deleteListing = async (req, res) => {
     res.redirect("/listings");
 
   } catch (err) {
-    console.log("DELETE ERROR:", err);
-    res.send("Error deleting listing");
+    console.log(err);
+    res.send("Something went wrong!");
   }
 };
 
@@ -189,7 +181,7 @@ module.exports.toggleWishlist = async (req, res) => {
     res.redirect("/listings");
 
   } catch (err) {
-    console.log("WISHLIST ERROR:", err);
-    res.send("Error updating wishlist");
+    console.log(err);
+    res.send("Something went wrong!");
   }
 };
