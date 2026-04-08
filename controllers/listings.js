@@ -26,7 +26,7 @@ module.exports.index = async (req, res) => {
     });
 
   } catch (err) {
-    console.log(err);
+    console.log("INDEX ERROR:", err);
     res.send("Error loading listings");
   }
 };
@@ -36,7 +36,7 @@ module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
 };
 
-// CREATE 
+// CREATE
 module.exports.createListing = async (req, res) => {
   try {
     const data = req.body.listing;
@@ -48,7 +48,7 @@ module.exports.createListing = async (req, res) => {
     const listing = new Listing(data);
     listing.owner = req.user._id;
 
-    // IMAGE HANDLING 
+    // IMAGE SAFE
     if (req.file) {
       listing.image = {
         url: req.file.path,
@@ -89,7 +89,7 @@ module.exports.showListing = async (req, res, next) => {
     res.render("listings/show.ejs", { listing });
 
   } catch (err) {
-    console.log(err);
+    console.log("SHOW ERROR:", err);
     res.send("Error loading listing");
   }
 };
@@ -106,15 +106,22 @@ module.exports.renderEditForm = async (req, res, next) => {
     res.render("listings/edit.ejs", { listing });
 
   } catch (err) {
-    console.log(err);
+    console.log("EDIT ERROR:", err);
     res.send("Error loading edit form");
   }
 };
 
-// UPDATE 
+// UPDATE (FINAL FIXED)
 module.exports.updateListing = async (req, res) => {
   try {
-    const data = req.body.listing || req.body;
+    console.log("UPDATE BODY:", req.body);
+    console.log("UPDATE FILE:", req.file);
+
+    const data = req.body.listing;
+
+    if (!data) {
+      return res.send("No data received");
+    }
 
     const listing = await Listing.findByIdAndUpdate(
       req.params.id,
@@ -122,7 +129,7 @@ module.exports.updateListing = async (req, res) => {
       { new: true }
     );
 
-    //  IMAGE UPDATE
+    // SAFE IMAGE UPDATE
     if (req.file) {
       listing.image = {
         url: req.file.path,
@@ -135,7 +142,7 @@ module.exports.updateListing = async (req, res) => {
     res.redirect(`/listings/${listing._id}`);
 
   } catch (err) {
-    console.log(err);
+    console.log("UPDATE ERROR:", err);
     res.send("Error updating listing");
   }
 };
@@ -149,7 +156,7 @@ module.exports.deleteListing = async (req, res) => {
     res.redirect("/listings");
 
   } catch (err) {
-    console.log(err);
+    console.log("DELETE ERROR:", err);
     res.send("Error deleting listing");
   }
 };
@@ -176,7 +183,7 @@ module.exports.toggleWishlist = async (req, res) => {
     res.redirect("/listings");
 
   } catch (err) {
-    console.log(err);
+    console.log("WISHLIST ERROR:", err);
     res.send("Error updating wishlist");
   }
 };

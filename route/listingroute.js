@@ -11,7 +11,7 @@ const upload = multer({ storage });
 // index
 router.get("/", listingController.index);
 
-// wishlist toggle (GET – SIMPLE)
+// wishlist toggle 
 router.get("/:id/wishlist", isLoggedIn, listingController.toggleWishlist);
 
 // new
