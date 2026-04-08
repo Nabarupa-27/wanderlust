@@ -24,7 +24,7 @@ const userRoutes = require("./route/user");
 const listingRoutes = require("./route/listingroute");
 const reviewRoutes = require("./route/reviewroute");
 
-// DATABASE (direct URL - temporary fix)
+// DATABASE 
 const dbUrl =
   "mongodb+srv://nabarupabhunia27_db_user:Naba12345@cluster0.hyjzly4.mongodb.net/wanderlust";
 
@@ -43,21 +43,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
-
-/* SESSION STORE */
-/*
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET || "mysupersecret",
-  },
-  touchAfter: 24 * 3600,
-});
-
-store.on("error", function (e) {
-  console.log("SESSION STORE ERROR", e);
-});
-*/
 
 /* SESSION CONFIG */
 const sessionOptions = {

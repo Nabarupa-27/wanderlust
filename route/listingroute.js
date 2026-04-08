@@ -21,7 +21,6 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 router.post(
   "/",
   isLoggedIn,
-  upload.single("image"),
   validateListing,
   listingController.createListing
 );
@@ -36,7 +35,6 @@ router.get("/:id/edit", isLoggedIn, isOwner, listingController.renderEditForm);
 router.put(
   "/:id",
   isLoggedIn,
-  upload.single("image"),
   validateListing,
   listingController.updateListing
 );

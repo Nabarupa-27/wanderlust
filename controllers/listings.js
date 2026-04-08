@@ -50,19 +50,32 @@ module.exports.renderNewForm = (req, res) => {
 
 //CREATE
 module.exports.createListing = async (req, res) => {
-  const listing = new Listing(req.body.listing);
-  listing.owner = req.user._id;
+  try {
+    const listing = new Listing(req.body.listing);
+    listing.owner = req.user._id;
 
-  if (req.file) {
-    listing.image = {
-      url: req.file.path,
-      filename: req.file.filename,
-    };
+    // if image upload 
+    if (req.file) {
+      listing.image = {
+        url: req.file.path,
+        filename: req.file.filename,
+      };
+    } else {
+      // fallback image (IMPORTANT)
+      listing.image = {
+        url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+        filename: "default",
+      };
+    }
+
+    await listing.save();
+    req.flash("success", "New listing created");
+    res.redirect("/listings");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error while creating listing");
   }
-
-  await listing.save();
-  req.flash("success", "New listing created");
-  res.redirect("/listings");
 };
 
 //SHOW
@@ -95,14 +108,17 @@ module.exports.updateListing = async (req, res) => {
     { new: true }
   );
 
+  // only update image if uploaded
   if (req.file) {
-    if (listing.image?.filename) {
+    if (listing.image?.filename && listing.image.filename !== "default") {
       await cloudinary.uploader.destroy(listing.image.filename);
     }
+
     listing.image = {
       url: req.file.path,
       filename: req.file.filename,
     };
+
     await listing.save();
   }
 
