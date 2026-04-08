@@ -35,6 +35,7 @@ router.get("/:id/edit", isLoggedIn, isOwner, listingController.renderEditForm);
 router.put(
   "/:id",
   isLoggedIn,
+  upload.single("image"),
   listingController.updateListing
 );
 

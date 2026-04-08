@@ -31,12 +31,14 @@ module.exports.index = async (req, res) => {
   }
 };
 
+
 // NEW FORM
 module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
 };
 
-// CREATE
+
+// CREATE 
 module.exports.createListing = async (req, res) => {
   try {
     const data = req.body.listing;
@@ -48,8 +50,8 @@ module.exports.createListing = async (req, res) => {
     const listing = new Listing(data);
     listing.owner = req.user._id;
 
-    // IMAGE SAFE
-    if (req.file) {
+    // IMAGE HANDLE
+    if (req.file && req.file.path) {
       listing.image = {
         url: req.file.path,
         filename: req.file.filename,
@@ -71,6 +73,7 @@ module.exports.createListing = async (req, res) => {
     res.send("Error while creating listing");
   }
 };
+
 
 // SHOW
 module.exports.showListing = async (req, res, next) => {
@@ -94,6 +97,7 @@ module.exports.showListing = async (req, res, next) => {
   }
 };
 
+
 // EDIT FORM
 module.exports.renderEditForm = async (req, res, next) => {
   try {
@@ -111,12 +115,10 @@ module.exports.renderEditForm = async (req, res, next) => {
   }
 };
 
-// UPDATE (FINAL FIXED)
+
+// UPDATE 
 module.exports.updateListing = async (req, res) => {
   try {
-    console.log("UPDATE BODY:", req.body);
-    console.log("UPDATE FILE:", req.file);
-
     const data = req.body.listing;
 
     if (!data) {
@@ -129,8 +131,8 @@ module.exports.updateListing = async (req, res) => {
       { new: true }
     );
 
-    // SAFE IMAGE UPDATE
-    if (req.file) {
+    // IMAGE UPDATE
+    if (req.file && req.file.path) {
       listing.image = {
         url: req.file.path,
         filename: req.file.filename,
@@ -147,6 +149,7 @@ module.exports.updateListing = async (req, res) => {
   }
 };
 
+
 // DELETE
 module.exports.deleteListing = async (req, res) => {
   try {
@@ -160,6 +163,7 @@ module.exports.deleteListing = async (req, res) => {
     res.send("Error deleting listing");
   }
 };
+
 
 // WISHLIST
 module.exports.toggleWishlist = async (req, res) => {
@@ -180,6 +184,8 @@ module.exports.toggleWishlist = async (req, res) => {
     }
 
     await user.save();
+
+    req.flash("success", "Wishlist updated");
     res.redirect("/listings");
 
   } catch (err) {
