@@ -1,5 +1,9 @@
+require("dotenv").config();  
+
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+console.log("ENV:", process.env.CLOUD_NAME, process.env.CLOUD_API_KEY); // debug
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
