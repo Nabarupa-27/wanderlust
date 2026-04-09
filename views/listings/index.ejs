@@ -7,7 +7,7 @@
       <div class="airbnb-top-bar">
         <div class="airbnb-categories">
 
-          <a href="/listings" class="cat <%= !selectedCategory ? 'active' : '' %>">
+          <a href="/listings?category=trending" class="cat <%= selectedCategory === 'trending' ? 'active' : '' %>">
             <i class="fa-solid fa-fire"></i>
             <span>Trending</span>
           </a>
